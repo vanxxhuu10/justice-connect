@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Case Details</title>
+    <link 
+</head>
+<body>
+
+
+    <div class="container">
+        <h2>Case Details</h2>
+        <div class="details">
+            <p><strong>Case Number:</strong> <span id="caseNumber"></span></p>
+            <p><strong>Crime Type:</strong> <span id="crimeType"></span></p>
+            <p><strong>Status:</strong> <span id="status"></span></p>
+            <p><strong>FIR Details:</strong> <span id="firDetails"></span></p>
+            <p><strong>Court Hearings:</strong> <span id="courtHearings"></span></p>
+            <p><strong>Evidence:</strong> <span id="evidence"></span></p>
+            <p><strong>Sentencing:</strong> <span id="sentencing"></span></p>
+        </div>
+        <a href="main.html" class="back-btn">Back to Dashboard</a>
+    </div>
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const caseDetails = {
+                "C001": {
+                    crime: "Theft",
+                    status: "Pending",
+                    firDetails: "Filed on 2025-02-01 by John Doe. Theft of valuable items from a local store.",
+                    courtHearings: "Next hearing on 2025-03-05.",
+                    evidence: "CCTV footage, eyewitness testimony.",
+                    sentencing: "Awaiting trial."
+                },
+                "C002": {
+                    crime: "Fraud",
+                    status: "Ongoing",
+                    firDetails: "Filed on 2025-01-20. Accused of financial fraud of ₹5,00,000.",
+                    courtHearings: "Last hearing on 2025-03-10, next on 2025-04-02.",
+                    evidence: "Bank statements, forged documents.",
+                    sentencing: "Potential fine and imprisonment of 5 years."
+                },
+                "C003": {
+                    crime: "Assault",
+                    status: "Closed",
+                    firDetails: "Incident reported on 2025-01-10. Physical assault case in a bar fight.",
+                    courtHearings: "Final verdict given on 2025-02-15.",
+                    evidence: "Medical reports, video footage, witness statements.",
+                    sentencing: "Convicted, sentenced to 6 months imprisonment."
+                },
+                "C004": {
+                    crime: "Cybercrime",
+                    status: "Ongoing",
+                    firDetails: "Hacking attempt detected in a government portal on 2025-02-05.",
+                    courtHearings: "Upcoming hearing on 2025-03-12.",
+                    evidence: "IP logs, hacking tools, chat records.",
+                    sentencing: "Could face up to 10 years in prison if convicted."
+                },
+                "C005": {
+                    crime: "Murder",
+                    status: "Pending",
+                    firDetails: "Filed on 2025-02-25. Homicide case in city outskirts.",
+                    courtHearings: "First hearing scheduled for 2025-03-20.",
+                    evidence: "DNA reports, weapon with fingerprints.",
+                    sentencing: "Life imprisonment or death penalty if proven guilty."
+                },
+                "C006": {
+                    crime: "Bribery",
+                    status: "Closed",
+                    firDetails: "Bribery case involving a high-profile politician.",
+                    courtHearings: "Final hearing on 2025-02-25.",
+                    evidence: "Secretly recorded video, transaction receipts.",
+                    sentencing: "Found guilty, sentenced to 3 years imprisonment."
+                },
+                "C007": {
+                    crime: "Drug Possession",
+                    status: "Ongoing",
+                    firDetails: "Police found illegal drugs in suspect’s vehicle on 2025-02-18.",
+                    courtHearings: "Hearing scheduled on 2025-03-15.",
+                    evidence: "Confiscated drugs, forensic lab report.",
+                    sentencing: "Could result in 5-10 years in jail."
+                },
+                "C008": {
+                    crime: "Domestic Violence",
+                    status: "Pending",
+                    firDetails: "Complaint registered on 2025-02-22.",
+                    courtHearings: "Awaiting first court appearance on 2025-03-18.",
+                    evidence: "Medical reports, voice recordings, neighbor testimony.",
+                    sentencing: "Potential restraining order, rehabilitation, or prison."
+                },
+                "C009": {
+                    crime: "Kidnapping",
+                    status: "Ongoing",
+                    firDetails: "Child kidnapped from school on 2025-02-14.",
+                    courtHearings: "Critical hearing set for 2025-03-22.",
+                    evidence: "Ransom calls, suspect vehicle footage.",
+                    sentencing: "10+ years in prison if convicted."
+                },
+                "C010": {
+                    crime: "Extortion",
+                    status: "Closed",
+                    firDetails: "Business owner blackmailed for ₹10 lakh.",
+                    courtHearings: "Final ruling made on 2025-02-28.",
+                    evidence: "Threatening emails, bank records.",
+                    sentencing: "5 years imprisonment and ₹2 lakh fine."
+                }
+            };
+
+
+            // Get case number from URL
+            const params = new URLSearchParams(window.location.search);
+            const caseNumber = params.get("case");
+
+
+            // Display case details
+            if (caseNumber && caseDetails[caseNumber]) {
+                document.getElementById("caseNumber").innerText = caseNumber;
+                document.getElementById("crimeType").innerText = caseDetails[caseNumber].crime;
+                document.getElementById("status").innerText = caseDetails[caseNumber].status;
+                document.getElementById("firDetails").innerText = caseDetails[caseNumber].firDetails;
+                document.getElementById("courtHearings").innerText = caseDetails[caseNumber].courtHearings;
+                document.getElementById("evidence").innerText = caseDetails[caseNumber].evidence;
+                document.getElementById("sentencing").innerText = caseDetails[caseNumber].sentencing;
+            } else {
+                document.querySelector(".container").innerHTML = `<h2 style="color: red; text-align: center;">Case Not Found</h2>
+                <a href="main.html" class="back-btn">Back to Dashboard</a>`;
+            }
+        });
+    </script>
+
+
+</body>
+</html>

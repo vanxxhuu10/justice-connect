@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login - Legal Portal</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+  <style>
+    body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(to right, #2c3e50, #34495e);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.login-container {
+  background: #ffffff;
+  padding: 60px;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  width: 100%;
+  max-width: 550px;
+  text-align: center;
+}
+
+h2 {
+  color: #2c3e50;
+  margin-bottom: 30px;
+  font-size: 32px;
+}
+
+.role-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 35px;
+}
+
+.role-buttons button {
+  padding: 14px 28px;
+  background-color: #2980b9;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 18px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.role-buttons button:hover,
+.role-buttons button.active {
+  background-color: #1c6ea4;
+}
+
+.form-group {
+  display: none;
+  flex-direction: column;
+  align-items: stretch;
+  transition: opacity 0.3s ease;
+}
+
+.form-group input {
+  padding: 16px 18px;
+  margin: 12px 0;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  font-size: 18px;
+}
+
+.login-btn {
+  margin-top: 20px;
+  width: 100%;
+  padding: 16px;
+  background-color: #27ae60;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 18px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.login-btn:hover {
+  background-color: #1e8449;
+  transform: scale(1.03);
+}
+
+.error-message {
+  color: red;
+  font-size: 16px;
+  margin-top: 12px;
+  display: none;
+}
+
+/* Signup text and button container (if added inline) */
+.signup-wrapper {
+  margin-top: 35px;
+  text-align: center;
+}
+
+.signup-wrapper p {
+  font-size: 16px;
+  margin-bottom: 12px;
+}
+
+.signup-wrapper button {
+  background: #e67e22;
+  color: white;
+  padding: 14px 30px;
+  border: none;
+  cursor: pointer;
+  border-radius: 10px;
+  font-size: 18px;
+}
+
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <h2>Login Portal</h2>
+
+    <div class="role-buttons">
+      <button id="lawyerBtn" onclick="selectRole('lawyer')">Lawyer</button>
+      <button id="victimBtn" onclick="selectRole('victim')">Victim</button>
+    </div>
+
+    <div id="lawyerForm" class="form-group">
+      <input type="text" id="lawyerName" placeholder="Lawyer Name">
+      <input type="text" id="lawyerId" placeholder="Lawyer ID">
+      <input type="password" id="lawyerPassword" placeholder="Password">
+      <button id="lawyerLoginBtn" class="login-btn" onclick="handleLogin('lawyer')">Login as Lawyer</button>
+    </div>
+
+    <div id="victimForm" class="form-group">
+      <input type="text" id="victimName" placeholder="Victim Name">
+      <input type="text" id="victimId" placeholder="Victim ID">
+      <input type="password" id="victimPassword" placeholder="Password">
+      <button id="victimLoginBtn" class="login-btn" onclick="handleLogin('victim')">Login as Victim</button>
+    </div>
+
+    <div class="error-message" id="errorMsg">Please fill all fields.</div>
+    <div style="margin-top: 25px; text-align: center;">
+        <p style="margin: 0 0 10px 0;">Don't have an account?</p>
+        <button style="background: #e67e22; color: white; padding: 10px 25px; border: none; cursor: pointer; border-radius: 8px;" onclick="window.location.href='signup.html'">
+          Signup
+        </button>
+      </div>
+  </div>
+  
+
+
+  <script>
+    function selectRole(role) {
+  const lawyerBtn = document.getElementById('lawyerBtn');
+  const victimBtn = document.getElementById('victimBtn');
+  const lawyerForm = document.getElementById('lawyerForm');
+  const victimForm = document.getElementById('victimForm');
+  const errorMsg = document.getElementById('errorMsg');
+  errorMsg.style.display = 'none';
+
+  localStorage.setItem("userRole", role);
+
+  if (role === 'lawyer') {
+    lawyerBtn.classList.add('active');
+    victimBtn.classList.remove('active');
+    lawyerForm.style.display = 'flex';
+    victimForm.style.display = 'none';
+  } else {
+    victimBtn.classList.add('active');
+    lawyerBtn.classList.remove('active');
+    victimForm.style.display = 'flex';
+    lawyerForm.style.display = 'none';
+  }
+}
+
+// Toggle between lawyer and victim signup fields
+document.getElementById('lawyerBtn').addEventListener('click', function () {
+    document.getElementById('lawyerFields').style.display = 'flex';
+    document.getElementById('victimFields').style.display = 'none';
+});
+
+document.getElementById('victimBtn').addEventListener('click', function () {
+    document.getElementById('victimFields').style.display = 'flex';
+    document.getElementById('lawyerFields').style.display = 'none';
+});
+
+// Handle Signup Requests
+async function handleLogin(role) {
+    const name = document.getElementById(role + 'Name').value;
+    const userId = document.getElementById(role + 'Id').value;
+    const password = document.getElementById(role + 'Password').value;
+
+    const res = await fetch('http://localhost:3000/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ role, name, userId, password })
+    });
+
+    const data = await res.json();
+
+    if (data.success) {
+        // ✅ Redirect to main.html
+        window.location.href = "main.html";
+    } else {
+        // ❌ Show error
+        document.getElementById("errorMsg").innerText = data.message || "Something went wrong. Try again.";
+    }
+}
+
+document.getElementById('lawyerLoginBtn').addEventListener('click', () => handleLogin('lawyer'));
+document.getElementById('victimLoginBtn').addEventListener('click', () => handleLogin('victim'));
+
+
+
+
+  </script>
+  
+</body>
+</html>

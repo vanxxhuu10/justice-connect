@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Case Dashboard</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #ecf0f1;
+        }
+
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+
+        /* Search & Filter Section */
+        .filter {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            padding: 20px;
+            background: white;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            margin: 20px auto;
+            width: 80%;
+        }
+
+
+        .filter input, .filter select, .filter button {
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #bdc3c7;
+            outline: none;
+        }
+
+
+        .filter input {
+            width: 250px;
+        }
+
+
+        .filter button {
+            background-color: #2980b9;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+
+        .filter button:hover {
+            background-color: #1a5276;
+        }
+
+
+        /* Table Styles */
+        table {
+            width: 85%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+
+        th, td {
+            padding: 12px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+
+        th {
+            background: #34495e;
+            color: white;
+            font-weight: bold;
+        }
+
+
+        tr:hover {
+            background: #f1f1f1;
+            transition: 0.3s;
+        }
+
+
+        /* Details Button */
+        a {
+            text-decoration: none;
+            color: white;
+            background: #27ae60;
+            padding: 8px 12px;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+
+
+        a:hover {
+            background: #1e8449;
+        }
+
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .filter {
+                flex-direction: column;
+                width: 90%;
+                text-align: center;
+            }
+
+
+            .filter input, .filter select, .filter button {
+                width: 100%;
+            }
+
+
+            table {
+                width: 95%;
+            }
+
+
+            th, td {
+                padding: 8px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<head>
+    <style>
+        /* Styling for the portal buttons */
+        /* Section for portal buttons */
+.portal-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    padding: 80px 0;
+    background: linear-gradient(to right, #ecf0f1, #ffffff);
+}
+
+/* Button styles */
+.portal-buttons button {
+    padding: 16px 36px;
+    font-size: 20px;
+    font-weight: 600;
+    border: none;
+    border-radius: 12px;
+    color: white;
+    background: linear-gradient(135deg, #2c3e50, #2980b9);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.portal-buttons button:hover {
+    background: linear-gradient(135deg, #34495e, #3498db);
+    transform: scale(1.07);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+}
+
+
+        .logout-btn {
+    background: linear-gradient(135deg, #e74c3c, #c0392b);
+    color: #fff;
+    padding: 10px 24px;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    transition: all 0.3s ease;
+    position: absolute;
+    top: 20px;
+    right: 30px;
+}
+
+.logout-btn:hover {
+    background: linear-gradient(135deg, #c0392b, #a93226);
+    transform: scale(1.05);
+}
+  /* Modal Styles */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 999;
+  left: 0; top: 0;
+  width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(5px);
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background: #fff;
+  padding: 30px;
+  border-radius: 15px;
+  width: 350px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.3);
+  text-align: center;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.modal-content input {
+  width: 90%;
+  margin: 10px 0;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.modal-content button {
+  padding: 12px 25px;
+  background: #2980b9;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.modal-content button:hover {
+  background: #3498db;
+}
+
+.close-btn {
+  float: right;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.error-text {
+  color: red;
+  margin-top: 10px;
+}
+
+@keyframes fadeIn {
+  from { transform: translateY(-20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Legal Case Management System</h1>
+    </header>
+
+    <section class="portal-buttons">
+        <button id="lawyerPortalBtn">Lawyer Portal</button>
+<button id="victimPortalBtn" onclick="window.location.href='victim-portal.html'">Victim Portal</button>
+
+    </section>
+
+    <section class="filter">
+        <input type="text" id="searchInput" placeholder="Search cases by number">
+        <select id="filterStatus">
+            <option value="">All Cases</option>
+            <option value="Pending">Pending</option>
+            <option value="Ongoing">Ongoing</option>
+            <option value="Closed">Closed</option>
+        </select>
+        <button onclick="filterCases()">Search</button>
+    </section>
+
+    <section class="dashboard">
+        <table>
+            <thead>
+                <tr>
+                    <th>Case Number</th>
+                    <th>Crime Type</th>
+                    <th>Status</th>
+                    <th>Last Hearing</th>
+                    <th>Details</th>
+                </tr>
+            </thead>
+            <tbody id="caseList">
+                <!-- Cases will be populated by JavaScript -->
+            </tbody>
+        </table>
+    </section>
+    <button class="logout-btn" onclick="logout()">Logout</button>
+    <!-- Lawyer Login Modal -->
+<div id="lawyerModal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeLawyerModal()">&times;</span>
+      <h2>Lawyer Login</h2>
+      <input type="text" id="lawyerId" placeholder="Lawyer ID" />
+      <input type="password" id="lawyerPassword" placeholder="Password" />
+      <button onclick="verifyLawyerCredentials()">Login</button>
+    </div>
+  </div>
+  
+      
+      
+    <script>
+        function logout() {
+  localStorage.removeItem("userRole");
+  window.location.href = "login.html";
+}
+
+window.onload = () => {
+  const role = localStorage.getItem("userRole");
+
+  if (role === "lawyer") {
+    const victimBtn = document.getElementById("victimPortalBtn");
+    if (victimBtn) victimBtn.style.display = "none";
+  } else if (role === "victim") {
+    const lawyerBtn = document.getElementById("lawyerPortalBtn");
+    if (lawyerBtn) lawyerBtn.style.display = "none";
+  }
+};
+
+document.addEventListener("DOMContentLoaded", function () {
+  const cases = [
+    { number: "C001", crime: "Theft", status: "Pending", hearing: "2025-03-05" },
+    { number: "C002", crime: "Fraud", status: "Ongoing", hearing: "2025-03-10" },
+    { number: "C003", crime: "Assault", status: "Closed", hearing: "2025-02-15" },
+    { number: "C004", crime: "Cybercrime", status: "Ongoing", hearing: "2025-03-12" },
+    { number: "C005", crime: "Murder", status: "Pending", hearing: "2025-03-20" },
+    { number: "C006", crime: "Bribery", status: "Closed", hearing: "2025-02-25" },
+    { number: "C007", crime: "Drug Possession", status: "Ongoing", hearing: "2025-03-15" },
+    { number: "C008", crime: "Domestic Violence", status: "Pending", hearing: "2025-03-18" },
+    { number: "C009", crime: "Kidnapping", status: "Ongoing", hearing: "2025-03-22" },
+    { number: "C010", crime: "Extortion", status: "Closed", hearing: "2025-02-28" }
+  ];
+
+  const caseTable = document.getElementById("caseList");
+  const searchInput = document.getElementById("searchInput");
+  const filterStatus = document.getElementById("filterStatus");
+
+  function displayCases(filteredCases) {
+    caseTable.innerHTML = "";
+    if (filteredCases.length === 0) {
+      caseTable.innerHTML = `<tr><td colspan="5" style="text-align: center; color: red;">No cases found</td></tr>`;
+      return;
+    }
+
+    filteredCases.forEach(caseItem => {
+      caseTable.innerHTML += `
+        <tr>
+          <td>${caseItem.number}</td>
+          <td>${caseItem.crime}</td>
+          <td>${caseItem.status}</td>
+          <td>${caseItem.hearing}</td>
+          <td><a href="case-details.html?case=${caseItem.number}">View</a></td>
+        </tr>`;
+    });
+  }
+
+  function filterCases() {
+    const searchValue = searchInput.value.toLowerCase();
+    const statusValue = filterStatus.value;
+
+    const filtered = cases.filter(caseItem =>
+      (caseItem.number.toLowerCase().includes(searchValue)) &&
+      (statusValue === "" || caseItem.status === statusValue)
+    );
+
+    displayCases(filtered);
+  }
+
+  searchInput.addEventListener("input", filterCases);
+  filterStatus.addEventListener("change", filterCases);
+  displayCases(cases);
+});
+
+// Lawyer Modal Logic
+const lawyerBtn = document.getElementById("lawyerPortalBtn");
+const modal = document.getElementById("lawyerModal");
+const errorText = document.getElementById("passwordError");
+const elementsToBlur = document.querySelectorAll("header, .portal-buttons, .filter, .dashboard, .logout-btn");
+
+lawyerBtn.addEventListener("click", () => {
+  modal.style.display = "flex";
+  elementsToBlur.forEach(el => el.classList.add("blurred"));
+});
+
+function closeLawyerModal() {
+  modal.style.display = "none";
+  elementsToBlur.forEach(el => el.classList.remove("blurred"));
+  errorText.textContent = ""; // Clear any error messages
+  document.getElementById("lawyerId").value = "";
+  document.getElementById("lawyerPassword").value = "";
+}
+
+// Function to verify lawyer credentials
+function verifyLawyerCredentials() {
+  const lawyerId = document.getElementById('lawyerId').value;
+  const password = document.getElementById('lawyerPassword').value;
+
+  fetch('/api/lawyer-login', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ lawyerId, lawyerPassword:password })
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.success) {
+      window.location.href = 'lawyer-portal.html';
+    } else {
+      document.getElementById('passwordError').innerText = 'Invalid credentials!';
+    }
+  });
+}
+    </script>
+
+</body>
+
+
+</html>

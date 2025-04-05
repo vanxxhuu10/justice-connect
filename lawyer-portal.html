@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lawyer Portal</title>
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+    
+        body {
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            min-height: 100vh;
+            padding: 40px 20px;
+            color: #f2f2f2;
+        }
+    
+        h1 {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 30px;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
+        }
+    
+        /* Button Filters */
+        button {
+            margin: 10px 10px 20px 0;
+            padding: 10px 20px;
+            background-color: #1e90ff;
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+    
+        button:hover {
+            background-color: #005bb5;
+            transform: scale(1.05);
+        }
+    
+        /* Cards Container */
+        .cases-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+    
+        /* Case Card Styling */
+        .case-card {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 25px;
+            width: 300px;
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+        }
+    
+        .case-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+        }
+    
+        .case-title {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: #ffffff;
+        }
+    
+        .case-status {
+            font-size: 1rem;
+            margin-bottom: 15px;
+            color: #dcdcdc;
+        }
+    
+        .case-button {
+            display: inline-block;
+            background-color: #28a745;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+    
+        .case-button:hover {
+            background-color: #218838;
+        }
+    
+        /* Modal Styling */
+        .modal {
+            display: none;
+            position: fixed;
+            z-main: 100;
+            left: 0;
+            top: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(0,0,0,0.6);
+            justify-content: center;
+            align-items: center;
+        }
+    
+        .modal-content {
+            background-color: #1e1e2f;
+            padding: 30px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 600px;
+            color: #f1f1f1;
+            position: relative;
+            box-shadow: 0 5px 30px rgba(0,0,0,0.5);
+        }
+    
+        .modal-content h2 {
+            margin-bottom: 15px;
+            color: #ffd700;
+            font-size: 2rem;
+        }
+    
+        .modal-content ul {
+            list-style: disc;
+            margin-left: 20px;
+            line-height: 1.6;
+        }
+    
+        .modal-content p {
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+            color: #ccc;
+        }
+    
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 24px;
+            cursor: pointer;
+            color: #ff6b6b;
+        }
+    
+        .close-modal:hover {
+            color: #ff1c1c;
+        }
+
+        .button-group {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+    
+.contact-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    border: none;
+    color: white;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.contact-button:hover {
+    background-color: #0056b3;
+}
+
+
+    </style>
+    
+</head>
+<body>
+    
+    
+<div class="container">
+    <h1>Lawyer Portal</h1>
+    <header>
+        <h1>Welcome, <span id="lawyerNameDisplay"></span></h1>
+      </header>
+      
+
+    <div class="button-group">
+        <button onclick="filterCases('All')">All Cases</button>
+        <button onclick="filterCases('Pending')">Pending</button>
+        <button onclick="filterCases('Ongoing')">Ongoing</button>
+        <button onclick="filterCases('Completed')">Completed</button>
+    </div>
+    <div class="cases-container" id="casesContainer"></div>
+</div>
+
+<!-- Case Details Modal -->
+<!-- Case Details Modal -->
+<!-- Case Details Modal -->
+<div class="modal" id="caseModal">
+    <div class="modal-content">
+        <span class="close-modal" onclick="closeModal()">&times;</span>
+        <h2 id="modalTitle"></h2>
+        <p id="modalVictim"></p>
+        <div id="modalDetails"></div> <!-- ✅ Contact button will be dynamically injected here -->
+    </div>
+</div>
+
+
+
+<script>
+    
+    const cases = {
+    "C001": { 
+        crime: "Theft", 
+        status: "Pending", 
+        victim: "John Doe (johndoe@gmail.com)", 
+        details: [
+            "Burglary at a jewelry shop; items worth ₹10,00,000 stolen.",
+            "CCTV footage shows two masked individuals.",
+            "Possible insider involvement under investigation.",
+            "Police tracking stolen items in the black market."
+        ]
+    },
+    "C002": { 
+        crime: "Fraud", 
+        status: "Ongoing", 
+        victim: "Jane Smith (janesmith@gmail.com)", 
+        details: [
+            "Scammer posed as a government officer and offered fake loans.",
+            "Multiple victims reported fraudulent transactions.",
+            "Bank statements show suspicious withdrawals.",
+            "Main suspect identified; investigation in progress."
+        ]
+    },
+    "C003": { 
+        crime: "Murder", 
+        status: "Pending", 
+        victim: "David Clark (davidclark@gmail.com)", 
+        details: [
+            "Victim found in an abandoned warehouse with multiple stab wounds.",
+            "DNA reports indicate multiple suspects.",
+            "Weapon with fingerprints recovered at the crime scene.",
+            "Possible gang involvement; under investigation."
+        ]
+    },
+    "C004": { 
+        crime: "Cybercrime", 
+        status: "Under Investigation", 
+        victim: "TechCorp Ltd. (techcorp@gmail.com)", 
+        details: [
+            "Company database breached, exposing 5,000+ customer records.",
+            "Hackers demanded ransom in cryptocurrency.",
+            "Forensic experts analyzing attack vectors.",
+            "Suspected phishing emails as entry point."
+        ]
+    },
+    "C005": { 
+        crime: "Assault", 
+        status: "In Court", 
+        victim: "Michael Brown (michaelbrown@gmail.com)", 
+        details: [
+            "Victim attacked during a street fight.",
+            "CCTV footage captured the incident.",
+            "Suspect has a prior criminal record.",
+            "Medical reports confirm serious injuries."
+        ]
+    },
+    "C006": { 
+        crime: "Drug Trafficking", 
+        status: "Arrest Made", 
+        victim: "N/A (na@gmail.com)", 
+        details: [
+            "Police seized 20kg of illegal substances at city border.",
+            "Suspect linked to international smuggling network.",
+            "Undercover officers recorded multiple transactions.",
+            "Trial scheduled for next month."
+        ]
+    },
+    "C007": { 
+        crime: "Kidnapping", 
+        status: "Under Investigation", 
+        victim: "Sarah Williams (sarahwilliams@gmail.com)", 
+        details: [
+            "Victim abducted from outside school premises.",
+            "Ransom demand of ₹50,00,000 received.",
+            "Police tracking suspect's phone location.",
+            "Family under protection; search ongoing."
+        ]
+    },
+    "C008": { 
+        crime: "Bribery", 
+        status: "Charges Filed", 
+        victim: "Government Office (govoffice@gmail.com)", 
+        details: [
+            "Senior official caught accepting bribes for contract approvals.",
+            "Hidden camera footage submitted as evidence.",
+            "Multiple whistleblowers have come forward.",
+            "Internal investigation initiated."
+        ]
+    },
+    "C009": { 
+        crime: "Domestic Violence", 
+        status: "Awaiting Verdict", 
+        victim: "Emily Roberts (emilyroberts@gmail.com)", 
+        details: [
+            "Repeated abuse over 3 years; reported to police.",
+            "Medical reports confirm multiple injuries.",
+            "Neighbors witnessed violent altercations.",
+            "Court decision expected next week."
+        ]
+    },
+    "C010": { 
+        crime: "Illegal Arms Deal", 
+        status: "Ongoing", 
+        victim: "N/A (naarms@gmail.com)", 
+        details: [
+            "Large shipment of illegal firearms intercepted.",
+            "Suspects include local and international dealers.",
+            "Police investigating supply chain.",
+            "Intelligence agencies assisting in the case."
+        ]
+    }
+};
+
+
+    function displayCases(statusFilter = "All") {
+    let container = document.getElementById("casesContainer");
+    container.innerHTML = "";
+
+    Object.keys(cases).forEach(caseID => {
+        let caseData = cases[caseID];
+        let caseStatus = caseData.status.toLowerCase();
+
+        // Normalize filter logic
+        if (
+            statusFilter === "All" ||
+            (statusFilter === "Pending" && caseStatus.includes("pending")) ||
+            (statusFilter === "Ongoing" && caseStatus.includes("ongoing")) ||
+            (statusFilter === "Completed" &&
+                (caseStatus.includes("completed") ||
+                 caseStatus.includes("charges filed") ||
+                 caseStatus.includes("in court") ||
+                 caseStatus.includes("arrest made") ||
+                 caseStatus.includes("awaiting verdict")))
+        ) {
+            let caseHTML = `
+                <div class="case-card">
+                    <div class="case-title">${caseData.crime}</div>
+                    <div class="case-status">Status: ${caseData.status}</div>
+                    <a class="case-button" onclick="openModal('${caseID}')">View Details</a>
+                </div>
+            `;
+            container.innerHTML += caseHTML;
+        }
+    });
+
+    if (container.innerHTML === "") {
+        container.innerHTML = "<p style='text-align:center;'>No cases found for this category.</p>";
+    }
+}
+function filterCases(filter) {
+    displayCases(filter);
+}
+
+
+function openModal(caseID) {
+    const caseData = cases[caseID];
+    const emailMatch = caseData.victim.match(/\((.*?)\)/); // Extract email from parentheses
+
+    document.getElementById("modalTitle").innerText = caseData.crime;
+    document.getElementById("modalVictim").innerText = "Victim: " + caseData.victim;
+
+    let detailsHTML = "<ul>";
+    caseData.details.forEach(point => {
+        detailsHTML += `<li>${point}</li>`;
+    });
+    detailsHTML += "</ul>";
+
+    // Only add Contact button if email exists
+    if (emailMatch && emailMatch[1]) {
+        const email = emailMatch[1];
+        detailsHTML += `
+            <div style="margin-top: 15px;">
+                <a href="https://mail.google.com/mail/?view=cm&fs=1&to=${email}" target="_blank">
+                    <button style="padding: 10px 20px; background-color: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer;">
+                        Contact
+                    </button>
+                </a>
+            </div>`;
+    }
+
+    document.getElementById("modalDetails").innerHTML = detailsHTML;
+    document.getElementById("caseModal").style.display = "flex";
+}
+
+
+
+    function closeModal() {
+        document.getElementById("caseModal").style.display = "none";
+    }
+
+    window.onload = displayCases;
+    function contactVictim() {
+    const victimInfo = document.getElementById("modalVictim").innerText;
+    const emailMatch = victimInfo.match(/\(([^)]+)\)/);
+
+    if (emailMatch && emailMatch[1]) {
+        const email = emailMatch[1];
+        if (confirm(`Do you want to email ${email}?`)) {
+            const subject = encodeURIComponent("Regarding Your Case");
+            const body = encodeURIComponent("Hello,\n\nI would like to discuss your case further.\n\nRegards,\nLawyer");
+            window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
+        }
+    } else {
+        alert("No valid email address found for this case.");
+    }
+}
+
+  window.onload = function() {
+    const name = localStorage.getItem("lawyerName");
+    if (name) {
+      document.getElementById("lawyerWelcome").innerText = `Welcome, ${name}`;
+    }
+  };
+
+
+
+
+</script>
+
+</body>
+</html>

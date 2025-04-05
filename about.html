@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Justice Connect | Home</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+    body {
+      background: linear-gradient(to right, #141e30, #243b55);
+      color: white;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    header {
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(0, 0, 0, 0.3);
+    }
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+      color: #00d4ff;
+    }
+    .header-buttons {
+      display: flex;
+      gap: 15px;
+    }
+    .btn {
+      padding: 10px 20px;
+      border: none;
+      background-color: #00d4ff;
+      color: #141e30;
+      font-weight: bold;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      text-decoration: none;
+    }
+    .btn:hover {
+      background-color: #00aacc;
+    }
+    main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 40px;
+      animation: fadeIn 1.5s ease-in;
+    }
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 20px;
+    }
+    p {
+      max-width: 700px;
+      font-size: 1.2rem;
+      line-height: 1.6;
+    }
+
+    /* Testimonials Section */
+    .testimonials {
+      padding: 60px 40px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      margin-top: 60px;
+      width: 100%;
+      max-width: 1000px;
+    }
+    .testimonials h2 {
+      font-size: 2rem;
+      margin-bottom: 40px;
+    }
+    .testimonial-grid {
+      display: grid;
+      gap: 30px;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    }
+    .testimonial-card {
+      background: rgba(0, 0, 0, 0.4);
+      padding: 20px;
+      border-radius: 10px;
+      transition: transform 0.3s ease;
+    }
+    .testimonial-card:hover {
+      transform: translateY(-5px);
+    }
+    .testimonial-content i {
+      color: #00d4ff;
+      font-size: 1.5rem;
+    }
+    .testimonial-content p {
+      font-style: italic;
+      margin: 10px 0;
+    }
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      margin-top: 15px;
+    }
+    .testimonial-author img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      margin-right: 15px;
+    }
+    .testimonial-author h4 {
+      margin: 0;
+      font-size: 1.1rem;
+      font-weight: bold;
+    }
+    .testimonial-author p {
+      margin: 0;
+      font-size: 0.9rem;
+      color: #ccc;
+    }
+
+    footer {
+      padding: 20px;
+      text-align: center;
+      background: rgba(0, 0, 0, 0.3);
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">Justice Connect</div>
+    <div class="header-buttons">
+      <a href="about.html" class="btn">About</a>
+      <a href="login.html" class="btn">Login</a>
+    </div>
+  </header>
+
+  <main>
+    <h1>Welcome to Justice Connect</h1>
+    <p>Your trusted digital platform for managing legal cases, securely connecting lawyers with cases in real time.</p>
+
+    <section class="testimonials">
+      <h2>What Our Customers Say</h2>
+      <div class="testimonial-grid">
+        <div class="testimonial-card">
+          <div class="testimonial-content">
+            <i class="fas fa-quote-left"></i>
+            <p>"Outstanding service and amazing system. Justice Connect made case access seamless and secure."</p>
+          </div>
+          <div class="testimonial-author">
+            <img src="images/customer1.jpg" alt="John Smith">
+            <div>
+              <h4>John Smith</h4>
+              <p>New York, USA</p>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-content">
+            <i class="fas fa-quote-left"></i>
+            <p>"Professional, secure, and fast. I could manage my legal tasks with zero hassle. Highly recommend."</p>
+          </div>
+          <div class="testimonial-author">
+            <img src="images/customer2.jpg" alt="Emma Wilson">
+            <div>
+              <h4>Emma Wilson</h4>
+              <p>London, UK</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    &copy; 2025 Justice Connect. All rights reserved.
+  </footer>
+</body>
+</html>

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup</title>
+    <style>
+       body {
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: #2c3e50; /* same as login */
+}
+
+.container {
+    background: white;
+    padding: 40px 30px;
+    border-radius: 20px; /* more rounded like login box */
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+    text-align: center;
+    width: 400px;
+}
+
+h2 {
+    margin-bottom: 25px;
+    color: #2c3e50; /* matching the heading in login page */
+    font-size: 24px;
+}
+
+.role-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.role-buttons button {
+    padding: 10px 25px;
+    font-size: 16px;
+    background: #2d8ccf;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 10px;
+    transition: background 0.3s ease;
+}
+
+.role-buttons button:hover {
+    background: #2271aa;
+}
+
+.fields {
+    display: none;
+    flex-direction: column;
+    gap: 10px;
+}
+
+input {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+button.signup-btn {
+    width: 100%;
+    padding: 12px;
+    margin-top: 15px;
+    background: #e67e22; /* orange like login page's signup */
+    color: white;
+    border: none;
+    font-size: 16px;
+    border-radius: 8px;
+    transition: background 0.3s ease;
+}
+
+button.signup-btn:hover {
+    background: #d66911;
+}
+
+.login-redirect {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.login-redirect p {
+    font-size: 16px;
+    margin-bottom: 10px;
+    color: #2c3e50;
+}
+
+.login-redirect .login-btn {
+    padding: 10px 20px;
+    background-color: #2d8ccf; /* same blue as login page buttons */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.login-redirect .login-btn:hover {
+    background-color: #2271aa;
+}
+
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Signup</h2>
+        
+        <div class="role-buttons">
+            <button id="lawyerBtn">Lawyer</button>
+            <button id="victimBtn">Victim</button>
+        </div>
+
+        <!-- Lawyer Fields -->
+        <div id="lawyerFields" class="fields">
+            <input type="text" id="lawyerName" placeholder="Lawyer Name">
+            <input type="text" id="lawyerId" placeholder="Lawyer ID">
+            <input type="password" id="lawyerPassword" placeholder="Password">
+            <button class="signup-btn" id="lawyerSignupBtn">Signup as Lawyer</button>
+        </div>
+
+        <!-- Victim Fields -->
+        <div id="victimFields" class="fields">
+            <input type="text" id="victimName" placeholder="Victim Name">
+            <input type="text" id="victimId" placeholder="Victim ID">
+            <input type="password" id="victimPassword" placeholder="Password">
+            <button class="signup-btn" id="victimSignupBtn">Signup as Victim</button>
+        </div>
+        <div class="login-redirect">
+            <p>Already a user?</p>
+            <button onclick="window.location.href='login.html'" class="login-btn">Login</button>
+        </div>
+        
+    </div>
+
+    <script>
+        // Toggle between lawyer and victim signup fields
+        document.getElementById('lawyerBtn').addEventListener('click', function () {
+            document.getElementById('lawyerFields').style.display = 'flex';
+            document.getElementById('victimFields').style.display = 'none';
+        });
+    
+        document.getElementById('victimBtn').addEventListener('click', function () {
+            document.getElementById('victimFields').style.display = 'flex';
+            document.getElementById('lawyerFields').style.display = 'none';
+        });
+    
+        // Handle Signup Requests
+        async function handleSignup(role) {
+            const name = document.getElementById(role + 'Name').value.trim();
+            const userId = document.getElementById(role + 'Id').value.trim();
+            const password = document.getElementById(role + 'Password').value.trim();
+    
+            if (!name || !userId || !password) {
+                alert("Please fill in all the fields.");
+                return;
+            }
+    
+            try {
+                const res = await fetch('http://localhost:3000/signup', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ role, name, userId, password })
+                });
+    
+                const data = await res.json();
+    
+                if (data.success) {
+                    alert("Signup successful! Redirecting to login...");
+                    window.location.href = "login.html";
+                } else if (data.message === 'User already exists') {
+                    alert("User already registered. Please go to login.");
+                } else {
+                    alert("Signup failed: " + data.message);
+                }
+            } catch (error) {
+                console.error("Error during signup:", error);
+                alert("Server error. Please try again later.");
+            }
+        }
+    
+        document.getElementById('lawyerSignupBtn').addEventListener('click', () => handleSignup('lawyer'));
+        document.getElementById('victimSignupBtn').addEventListener('click', () => handleSignup('victim'));
+    </script>
+    
+    </script>
+</body>
+</html>
