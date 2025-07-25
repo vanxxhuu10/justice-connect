@@ -148,9 +148,6 @@ h2 {
         </button>
       </div>
   </div>
-  
-
-
   <script>
     function selectRole(role) {
   const lawyerBtn = document.getElementById('lawyerBtn');
@@ -174,8 +171,6 @@ h2 {
     lawyerForm.style.display = 'none';
   }
 }
-
-// Toggle between lawyer and victim signup fields
 document.getElementById('lawyerBtn').addEventListener('click', function () {
     document.getElementById('lawyerFields').style.display = 'flex';
     document.getElementById('victimFields').style.display = 'none';
@@ -185,8 +180,6 @@ document.getElementById('victimBtn').addEventListener('click', function () {
     document.getElementById('victimFields').style.display = 'flex';
     document.getElementById('lawyerFields').style.display = 'none';
 });
-
-// Handle Signup Requests
 async function handleLogin(role) {
     const name = document.getElementById(role + 'Name').value;
     const userId = document.getElementById(role + 'Id').value;
@@ -201,20 +194,14 @@ async function handleLogin(role) {
     const data = await res.json();
 
     if (data.success) {
-        // ✅ Redirect to main.html
         window.location.href = "main.html";
     } else {
-        // ❌ Show error
         document.getElementById("errorMsg").innerText = data.message || "Something went wrong. Try again.";
     }
 }
 
 document.getElementById('lawyerLoginBtn').addEventListener('click', () => handleLogin('lawyer'));
 document.getElementById('victimLoginBtn').addEventListener('click', () => handleLogin('victim'));
-
-
-
-
   </script>
   
 </body>
